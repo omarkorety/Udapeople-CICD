@@ -38,22 +38,22 @@ jobs:
 
   test-frontend:
     docker:
-      # Docker image here
+      circleci/node:13.8.0
     steps:
       - checkout
       - run:
-          name: test-front
+          name: testing frontend
           command: |
             cd frontend
             npm install
             npm run test
   test-backend:
     docker:
-      # Docker image here
+      circleci/node:13.8.0
     steps:
       - checkout
       - run:
-          name: test-backend
+          name: testing backend
           command: |
             cd backend
             npm install
