@@ -177,7 +177,7 @@ jobs:
       - install_ansible
       - install_awscli
 
-      - run: apt install tar gzip
+      - run: sudo apt install tar gzip
       - add_ssh_keys:
           fingerprints:
             - "a6:12:a0:82:51:31:c5:d5:8d:b6:89:e3:ce:35:84:2f"      
