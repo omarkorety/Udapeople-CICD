@@ -1,7 +1,15 @@
 version: 2.1
 orbs:
   slack: circleci/slack@4.1
+
 commands:
+  install_gzip: #we will install gzip 
+    description: Install gzip
+    steps:
+      - run:
+          name: Install gzip
+          command: |
+            sudo apt install gzip   
   destroy-environment: #step for create destroy-environment
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -142,7 +150,9 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      -  destroy-environment 
+##############################################################
+      - destroy-environment 
+      - install_gzip
 
 
 workflows:
