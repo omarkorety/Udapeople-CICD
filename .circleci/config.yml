@@ -23,11 +23,20 @@ commands:
       - run:
           name: Install Ansible
           command: |
-            sudo apt update
-            sudo apt install software-properties-common -y
-            sudo add-apt-repository --yes --update ppa:ansible/ansible
-            sudo apt install ansible -y
- ############################################################################################           
+            apt update
+            apt install software-properties-common -y
+            add-apt-repository --yes --update ppa:ansible/ansible
+            apt install ansible -y
+ ############################################################################################     
+  install_AWScli:
+    description: Install AWS CLI v2
+    steps:
+      - run:
+          name: Install AWS CLI v2
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install      
 jobs:
   build-frontend:
     docker:
@@ -166,13 +175,15 @@ jobs:
     steps:
       - checkout
       - install_ansible
+      - install_AWScli
+      
       - run: apk add --update tar gzip
       - add_ssh_keys:
           fingerprints:
             - "a6:12:a0:82:51:31:c5:d5:8d:b6:89:e3:ce:35:84:2f"      
       - attach_workspace:
           at: ~/
-          
+
       - run:
           name: Configure server
           command: |
