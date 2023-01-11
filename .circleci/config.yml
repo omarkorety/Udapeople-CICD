@@ -23,12 +23,10 @@ commands:
       - run:
           name: Install Ansible
           command: |
-            apk update
-            apk add
-            apt update
-            apt install software-properties-common -y
-            add-apt-repository --yes --update ppa:ansible/ansible
-            apt install ansible -y
+            sudo apt update
+            sudo apt install software-properties-common -y
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible -y
  ############################################################################################     
   install_awscli:
     description: Install AWS CLI v2
@@ -173,7 +171,7 @@ jobs:
       - destroy-environment 
   configure-infrastructure:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: cimg/base:stable
     steps:
       - checkout
       - install_ansible
