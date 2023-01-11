@@ -23,6 +23,8 @@ commands:
       - run:
           name: Install Ansible
           command: |
+            apk update
+            apk add
             apt update
             apt install software-properties-common -y
             add-apt-repository --yes --update ppa:ansible/ansible
