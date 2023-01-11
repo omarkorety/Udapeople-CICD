@@ -175,7 +175,7 @@ jobs:
     steps:
       - checkout
       - install_ansible
-      - install_awscli
+      # - install_awscli
 
       - run: apk add --update tar gzip
       - add_ssh_keys:
