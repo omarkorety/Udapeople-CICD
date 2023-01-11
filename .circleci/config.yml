@@ -28,7 +28,7 @@ commands:
             add-apt-repository --yes --update ppa:ansible/ansible
             apt install ansible -y
  ############################################################################################     
-  install_AWScli:
+  install_awscli:
     description: Install AWS CLI v2
     steps:
       - run:
@@ -175,8 +175,8 @@ jobs:
     steps:
       - checkout
       - install_ansible
-      - install_AWScli
-      
+      - install_awscli
+
       - run: apk add --update tar gzip
       - add_ssh_keys:
           fingerprints:
