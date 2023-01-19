@@ -57,6 +57,18 @@ commands:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install      
+  install_nodejs:
+    description: Install nodejs 13.8.0
+    steps:
+      - run:
+          name: Install nodejs 
+          command: |
+            #Install Node.js LTS version as our base Node.js version
+            curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+            sudo apt install -y nodejs  
+            #Use n version manager to use Node.js v13.8.0
+            sudo npm install --global n
+            sudo n 13.8.0
 jobs:
   build-frontend:
     docker:
@@ -275,11 +287,12 @@ jobs:
                     
   deploy-backend:
     docker:
-      - image: cimg/node
+      - image: cimg/base:stable
     steps:
       - checkout
       - install_awscli
       - install_ansible
+      - install_nodejs
       - run: sudo apt install tar gzip
 
       - add_ssh_keys:
