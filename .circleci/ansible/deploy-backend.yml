@@ -14,7 +14,8 @@
     - ansible_stdout_callback: yaml
 
   environment:
-    - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}" 
+    - NODE_ENV: production
+    - VERSION: "1"
     - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
     - TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
     - TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST')}}"
@@ -24,7 +25,7 @@
     - TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE')}}"
     - TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
     - TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
-  
+    - PORT: "{{ lookup('env', 'PORT')}}"
   pre_tasks:
     - name: "wait 200 seconds for target connection to become reachable/usable."
       wait_for_connection:
@@ -40,7 +41,7 @@
     - name: Install Python
       raw: apt -y update && apt -y install python3
       when: check_python.rc != 0
-      
+
 
   roles:
     - deploy
