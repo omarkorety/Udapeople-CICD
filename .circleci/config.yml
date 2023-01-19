@@ -243,6 +243,7 @@ jobs:
     steps:
       - checkout
       - install_awscli
+      - run: sudo apt install tar gzip
       - restore_cache:
           keys: [frontend-build]
       - run:
@@ -316,8 +317,8 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
+      - deploy-frontend:
+          requires: [run-migrations]
       # - deploy-backend:
       #     requires: [run-migrations]
       # - smoke-test:
