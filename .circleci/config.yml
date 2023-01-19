@@ -306,7 +306,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            cd frontend
+            cd backend
             npm install      
       - run:
           name: Deploy backend
@@ -320,7 +320,7 @@ jobs:
             cd ..
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
-            
+
             cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files/
 
             cd .circleci/ansible
