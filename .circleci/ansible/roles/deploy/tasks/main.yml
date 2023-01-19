@@ -10,7 +10,7 @@
   unarchive:
     src: artifact.tar.gz
     dest: ~/backend
-    # remote_src: yes
+    remote_src: yes
 
 - name: "Installing Node Dependencies"
   shell: |
@@ -19,4 +19,9 @@
     cd ~/backend/dist
     pm2 stop default
     pm2 start npm -- start
-    
+
+  register: execute_node
+
+- name: print message
+  debug:
+    msg: "{{ execute_node.stdout_lines }}"
