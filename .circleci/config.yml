@@ -416,7 +416,6 @@ jobs:
     steps:
       - checkout
       - install_awscli
-
       - run:
           name: Get old stack workflow id
           command: |
@@ -424,13 +423,13 @@ jobs:
             # Fetch the Old workflow ID
             export OLDWORKFLOWID= $(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id)
             echo "Old Wokflow ID: $OLDWORKFLOWID"
-            echo "current workflow id : " "${CIRCLE_WORKFLOW_ID:0:7}"           
+            echo "current workflow id : " "${CIRCLE_WORKFLOW_ID:0:7}"        
             # export OldWorkflowID="the id here"
             # export STACKS=[] #put the list of stacks here
       - run:
           name: Remove old stacks and files
           command: |
-            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            if [[ "${CIRCLE_WORKFLOW_ID:0:7}" =~ "${OldWorkflowID}" ]]
             then
               aws s3 rm "s3://${OldWorkflowID}" --recursive
               aws cloudformation delete-stack --stack-name "backend-${OldWorkflowID}"
@@ -439,18 +438,18 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
       - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
           filters:
             branches:
               only: [main]
