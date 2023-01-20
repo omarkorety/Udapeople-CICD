@@ -342,10 +342,13 @@ jobs:
           command: |
             sudo apt-get install curl
 
-      # - run:
-      #     name: Get backend url
-      #     command: |
-      #       # your code here
+      - run:
+          name: Get backend url
+          command: |
+            export BACKEND_IP=$(aws ec2 describe-instances \
+              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --output text)
       - run:
           name: Backend smoke test.
           command: |
@@ -365,7 +368,7 @@ jobs:
             if curl -s ${URL} | grep "Welcome"
             then
                 # Change this to 0 after the job fails
-              return 0
+              return 1
             else
               return 1
             fi
