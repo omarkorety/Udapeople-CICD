@@ -430,6 +430,7 @@ jobs:
       - run:
           name: Remove old stacks and files
           command: |
+              echo Old Workflow ID: $OldWorkflowID 
               if [[ "${CIRCLE_WORKFLOW_ID:0:7}" =~ "${OldWorkflowID}" ]]
               then
                 echo "----------------------------------Cleanup done----------------------------"
