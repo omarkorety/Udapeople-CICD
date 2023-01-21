@@ -432,7 +432,7 @@ jobs:
           name: Remove old stacks and files
           command: |
             echo Old Workflow ID: $OldWorkflowID 
-            export $OldWorkflowID=$(cat ~/OldWorkflowID)
+            OldWorkflowID=$(cat ~/OldWorkflowID)
             echo Old Workflow ID: $OldWorkflowID 
             echo Stack names: "${STACKS[@]}"
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
