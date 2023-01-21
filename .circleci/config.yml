@@ -413,10 +413,10 @@ jobs:
       - revert-migrations  
   cleanup:
     docker:
-      - image: cimg/base:stable
+      - image: amazon/aws-cli
     steps:
       - checkout
-      - install_awscli
+      # - install_awscli
       - run:
           name: Get old stack workflow id
           command: |
