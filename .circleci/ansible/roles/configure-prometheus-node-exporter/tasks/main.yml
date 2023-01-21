@@ -4,6 +4,7 @@
     dest: /tmp
     remote_src: yes
 
+
 - name: "move binary to /usr/local/bin."
   become: true
   copy:
