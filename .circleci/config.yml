@@ -417,28 +417,25 @@ jobs:
     steps:
       - checkout
       # - install_awscli
-      # - run:
-      #     name: Get old stack workflow id
-      #     command: |
-      #         export STACKS=($(aws cloudformation list-stacks \
-      #             --query "StackSummaries[*].StackName" \
-      #             --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
-      #         echo Stack names: "${STACKS[@]}"
-              # export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id	)
-      #         echo $OldWorkflowID > ~/OldWorkflowID
-      #         echo Old Workflow ID: $OldWorkflowID 
+      - run:
+          name: Get old stack workflow id
+          command: |
+              export STACKS=($(aws cloudformation list-stacks \
+                  --query "StackSummaries[*].StackName" \
+                  --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
+              echo Stack names: "${STACKS[@]}"
+              export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id	)
+              echo $OldWorkflowID > ~/OldWorkflowID
+              echo Old Workflow ID: $OldWorkflowID 
 
       - run:
           name: Remove old stacks and files
           command: |
-            # echo Old Workflow ID: $OldWorkflowID 
-            # export $OldWorkflowID=$(cat ~/OldWorkflowID)
-            export STACKS=($(aws cloudformation list-stacks \
-                --query "StackSummaries[*].StackName" \
-                --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
+            echo Old Workflow ID: $OldWorkflowID 
+            export $OldWorkflowID=$(cat ~/OldWorkflowID)
+            echo Old Workflow ID: $OldWorkflowID 
             echo Stack names: "${STACKS[@]}"
-            export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id	)              
-            if [[ "${CIRCLE_WORKFLOW_ID:0:7}" =~ "${OldWorkflowID}" ]]
+            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
               echo "----------------------------------Cleanup done----------------------------"
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
