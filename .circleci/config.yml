@@ -424,7 +424,7 @@ jobs:
                   --query "StackSummaries[*].StackName" \
                   --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
               echo Stack names: "${STACKS[@]}"
-              export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id)
+              export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/OLD_WORKFLOW_ID)
               echo Old Workflow ID: $OldWorkflowID 
 
       - run:
@@ -432,9 +432,12 @@ jobs:
           command: |
               if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
               then
+                echo "----------------------------------Cleanup done----------------------------"
                 aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
                 aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
                 aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
+              else
+                echo "----------------------------------Cannot Cleanup----------------------------"
               fi
 
 workflows:
