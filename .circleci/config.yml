@@ -437,9 +437,8 @@ jobs:
             STACKS=$(cat ~/STACKS)
             echo Old Workflow ID: $OldWorkflowID 
             echo Stack names: "${STACKS[@]}"
-            if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
-
-            # if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            # if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
+            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
               echo "----------------------------------Cleanup done----------------------------"
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
