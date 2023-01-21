@@ -426,6 +426,7 @@ jobs:
               echo Stack names: "${STACKS[@]}"
               export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id	)
               echo $OldWorkflowID > ~/OldWorkflowID
+              echo ${STACKS[@]} > ~/STACKS
               echo Old Workflow ID: $OldWorkflowID 
 
       - run:
@@ -433,6 +434,7 @@ jobs:
           command: |
             echo Old Workflow ID: $OldWorkflowID 
             OldWorkflowID=$(cat ~/OldWorkflowID)
+            STACKS=$(cat ~/STACKS)
             echo Old Workflow ID: $OldWorkflowID 
             echo Stack names: "${STACKS[@]}"
             if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
