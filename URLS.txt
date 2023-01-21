@@ -1,0 +1,3 @@
+GitHub Repo:  https://github.com/omarkorety/Udapeople-CICD
+
+s3 URL: http://udapeople-5915076.s3-website-us-east-1.amazonaws.com
